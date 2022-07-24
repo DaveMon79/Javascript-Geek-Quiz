@@ -1,145 +1,149 @@
-
-// make start button load first question and start timer
-
-// make true answers add to score
-
-// make false answers decrease from score
-
-// store intials and scores on local storage
-
-// load previous high scores
-
-// Clear scores when clear button pressed
-
-
+// Variables for functions which will be called in the pagee
 
 var startButton = document.getElementById("start-button");
 var questionText = document.getElementById("question-text");
+var answer = document.getElementById("answer");
+var timerCount = document.getElementById("timer-count");
+var choicesSection = document.querySelector('#choices-section');
+
+var initialsPage = document.getElementById("initials-page");
+var finalScore =document.getElementById("final-score");
+
+var submitButton = document.getElementById("submit-button");
 var goBackButton = document.getElementById("go-back");
 var clearScoresButton = document.getElementById("clear-scores");
-var timerCount = document.getElementById("timer-count");
-var choicesButton = Array.from(document.getElementById("choices-button"));
+
 
 var currentQuestion = {};
-var availibleQuestions = [];
-var score = 0;
-var questionCounter = 0;
-var correctAnswer = true;
-var startTime = "";
+var score = "";
+var currentQuestionIndex = 0
 
+// Questions for the quiz
 var questions = [
     {
 
-        Question: "The very first UFC event took place on Fri, 12 Nov 1993, but who won UFC 1?",
-        choice1: "Chuck Liddell",
-        choice2: "Forrest Griffin",
-        choice3: "Royce Gracie",
-        choice4: "BJ Penn",
-        answer: "3",
+        question: "The very first UFC event took place on Fri, 12 Nov 1993, but who won UFC 1?",
+        choices: ['Chuck Liddell', 'Forrest Griffin', 'Royce Gracie', 'BJ Penn'],
+        answer: "Royce Gracie",
 
     },
 
     {
 
-        Question: "Who was the first fighter to beat Georges St. Pierre?",
-        choice1: "BJ Pennn",
-        choice2: "Matt Hughes",
-        choice3: "Matt Serra",
-        choice4: "Johny Hendricks",
-        answer: "2",
+        question: "Who was the first fighter to beat Georges St. Pierre?",
+        choices: ["Johny Hendricks", "Matt Hughes", "Matt Serra", 'BJ Penn'],
+        answer: "Matt Hughes",
 
     },
 
     {
 
-        Question: "Who was the first fighter to hold UFC titles in multiple divisions at the same time?",
-        choice1: "Randy Couture",
-        choice2: "BJ Penn",
-        choice3: "Amanda Nunes",
-        choice4: "Connor McGreggor",
-        answer: "3",
+        question: "Who was the first fighter to hold UFC titles in multiple divisions at the same time?",
+        choices: ["Randy Couture", "BJ Penn", "Amanda Nunes", "Connor McGreggor"],
+        answer: "Connor McGreggor",
 
     },
 
     {
 
-        Question: "How many times did Anderson Silva defend his middleweight title?",
-        choice1: "8",
-        choice2: "9",
-        choice3: "10",
-        choice4: "11",
-        answer: "3",
+        question: "How many times did Anderson Silva defend his middleweight title?",
+        choices: ["8", "9", "10", "11"],
+        answer: "10",
 
     }
 ]
 
+var startTime = 60
 
+// Start quiz when the quiz button is clicked
 startButton.addEventListener("click", startQuiz);
 
-
-function startQuiz () {
-    startTime = 90;
-    score = 0;
-    allQuestions = [...questions];
-    newQuestion();
+// starts quiz setting the score as 0, removes the start quiz from page and actives the startTimer & show questions functions
+function startQuiz() {
+    score;
+    document.querySelector("#start-div").style.display = "none";
     startTimer();
-
+    showQuestion();
 
 }
 
-function startTimer () {
+function showQuestion() {
+//  makes the questions appear - It was set as none display in CSS
+    document.querySelector(".question").style.display = "block";
+// This section pulls the questions and answer string and displays them one at a time
+    var currentQuestion = questions[currentQuestionIndex]
+    var qEl = document.querySelector('#question-text')   
+    qEl.textContent = currentQuestion.question
+    choicesSection.innerHTML = ''
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
+        var choice = currentQuestion.choices[i]
+        var choiceBtn = document.createElement('button')
+        choiceBtn.setAttribute('value', choice)
+        choiceBtn.setAttribute('class', 'choice-btn')
+        choiceBtn.textContent = choice
+        choicesSection.appendChild(choiceBtn)
+        
+    }
 
-    var startTime = setInterval(function () {
+}
+
+// When an answer button is clicked, it removes time for incorrect answer and adds score for a correct answer
+function questionClick(event) {
+    var buttonEl = event.target
+    if (buttonEl.value !== questions[currentQuestionIndex].answer) {
+        startTime -= 10
+        answer.textContent = "Wrong answer!"
+
+    }
+    if (buttonEl.value === questions[currentQuestionIndex].answer)
+        score += 100
+        console.log(score)
+        
+    
+    questionText = document.getElementById("question-text")
+    timerCount.textContent = startTime
+    currentQuestionIndex++
+    showQuestion()
+    
+  }
+
+// Starts a 60 second timer clock which stops game at zero
+function startTimer() {
+
+    var timer = setInterval(function () {
         startTime--;
         timerCount.textContent = startTime;
 
-        if  (correctAnswer !== true) {
-            - 10 (startTime)
-        }
-        
-        if (timerCount === 0) {
+        if (startTime === 0) {
             clearInterval(timer);
-                }
+            endGame () 
+        }
     }, 1000);
+    
 }
 
-function newQuestion () {
-    questionCounter++;
-    var questionIndex = Math.floor(math.random() * 3);
-    currentQuestion = allQuestions[questionIndex],
-        questionText.innerText = currentQuestion.questionText;
 
 
-    choicesButton.forEach(choice => {
-        var number = choice.dataset["number"];
-        choice.innerText = currentQuestion["choice" + number]
-    }
-    );
+// Listens for answer choice then actives question click funstion
+choicesSection.onclick = questionClick
 
-    allQuestions.splice(questionIndex, 1);
+// Endgame function takes to the final score div and display score and lets you input initals.
+// It directs you to highscores page when submit button is pressed
 
-    correctAnswer = true;
+function endGame () {
+    location.href = './index2.html';
+    finalScore.innerHTML = "score";
+ 
+    
 }
 
-choicesButton.forEach(choice => {
-    choicesButton.addEventListener("click", e => {
-        if (!correctAnswer) return;
 
-        correctAnswer = false;
-        var selectedChoice = e.target;
-        var selectedAnswer = selectedChoice.dataset["number"]
-        console.log(selectedAnswer);
-        newQuestion();
+submitButton.onclick = highScoresPage 
 
-    });
-})
+// removes initils section and displayss high sccores section and displays saved high scores
+function highScoresPage () {
+    document.querySelector("#high-scores").style.display = "block";
+    document.querySelector("#initials-page").style.display = "none";
+    
+}
 
-
-
-
-
-
-
-//choicesButton.addEventListener("click", "choice");
-//goBackButton.addEventListener("click", "go-back");
-//clearScoresButton.addEventListener("click", "clear-scores");

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href= "./style.css">
+    <link rel="icon" type="image/x-icon" href="./Octogon.jpg">
     <title>UFC - Knockout Quiz</title>
 </head>
 <body>
@@ -19,26 +20,26 @@
         </div>
     </header>
 
-    <Section class="page2">
+    <Section id="initials-page" class="enter-initals">
         <div>
             <h2>All done!</h2>
         </div>
         <div>
-            <h3>Your final score is:</h3>
+            <h3>Your final score is:<span id="final-score"></span></h3>
         </div>
         <div class="input-name">
             <h4>Enter your initials:</h4>
             <form action="name">
-                <input type="text" placeholder="enter your initials here">
+                <input id="initials-input" type="text" placeholder="enter your initials here">
             </form>
-            <button>Submit</button>
+            <button id="submit-button">Submit</button>
         </div>
     </Section>
 
-    <section class="page2">
+    <section class="high-scores">
         <h2>High Scores</h2>
         <div>
-            <h3 id="highscore-name">Dave Monaghan</h3>
+            <h3 id="highscore-name"></h3>
         </div>
       
         <div class="scores-button">
@@ -48,6 +49,6 @@
     </section>
 
 
-    <script src="/script.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
