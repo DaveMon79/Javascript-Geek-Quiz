@@ -10,7 +10,7 @@
 
 /** adds background colour to the body**/
 body {
-    background-image: url(./belt.jpg);
+    background-image: url(./Octogon.png);
     background-position: center;
     background-size: 25%;
 
@@ -269,7 +269,8 @@ button:hover {
 @media screen and (max-width: 900px) {
     article,
     .question,
-    .page2
+    .enter-initals,
+    .high-scores
      { width: 90%;
 }
 }
@@ -313,6 +314,15 @@ button:hover {
 @media screen and (max-width: 900px) {
 .input-name input {
     width: auto;
+
+}
+}
+
+
+
+/** Adds a bottom margin to the start quiz button **/
+@media screen and (max-width: 900px) {
+.start-button {margin-bottom: 7vh;
 
 }
 }

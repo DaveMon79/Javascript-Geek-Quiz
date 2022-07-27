@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href= "./style.css">
-    <link rel="icon" type="image/x-icon" href="./Octogon.jpg">
+    <link rel="icon" type="image/x-icon" href="./UFC.jpg">
     <title>UFC - Knockout Quiz</title>
 </head>
 <body>
-
+<!-- Header which has link to high scores and countdown timer-->
     <header>
         <div>
             <p><a href="./index.html">View high Scores</a></p>
@@ -20,6 +20,7 @@
         </div>
     </header>
 
+    <!-- This section display score from the quiz and prompts the user to input their initials -->
     <Section id="initials-page" class="enter-initals">
         <div>
             <h2>All done!</h2>
@@ -32,10 +33,11 @@
             <form action="name">
                 <input id="initials-input" type="text" placeholder="enter your initials here">
             </form>
-            <button id="submit-button">Submit</button>
+            <button type="button" id="submit-button">Submit</button>
         </div>
     </Section>
 
+    <!-- Displays highscores with initials and lets go back to the start of the quiz and clear the highscores-->
     <section class="high-scores">
         <h2>High Scores</h2>
         <div>
@@ -48,7 +50,7 @@
         </div>
     </section>
 
-
-    <script src="./script.js"></script>
+    <!-- javascript link -->
+    <script src="script.js"></script>
 </body>
 </html>

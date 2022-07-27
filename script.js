@@ -7,7 +7,8 @@ var timerCount = document.getElementById("timer-count");
 var choicesSection = document.querySelector('#choices-section');
 
 var initialsPage = document.getElementById("initials-page");
-var finalScore =document.getElementById("final-score");
+var initialsInput = document.getElementById("initials-input");
+var finalScore = document.getElementById("final-score");
 
 var submitButton = document.getElementById("submit-button");
 var goBackButton = document.getElementById("go-back");
@@ -15,7 +16,7 @@ var clearScoresButton = document.getElementById("clear-scores");
 
 
 var currentQuestion = {};
-var score = "";
+var score = 0;
 var currentQuestionIndex = 0
 
 // Questions for the quiz
@@ -55,8 +56,7 @@ var questions = [
 
 var startTime = 60
 
-// Start quiz when the quiz button is clicked
-startButton.addEventListener("click", startQuiz);
+
 
 // starts quiz setting the score as 0, removes the start quiz from page and actives the startTimer & show questions functions
 function startQuiz() {
@@ -68,11 +68,11 @@ function startQuiz() {
 }
 
 function showQuestion() {
-//  makes the questions appear - It was set as none display in CSS
+    //  makes the questions appear - It was set as none display in CSS
     document.querySelector(".question").style.display = "block";
-// This section pulls the questions and answer string and displays them one at a time
+    // This section pulls the questions and answer string and displays them one at a time
     var currentQuestion = questions[currentQuestionIndex]
-    var qEl = document.querySelector('#question-text')   
+    var qEl = document.querySelector('#question-text')
     qEl.textContent = currentQuestion.question
     choicesSection.innerHTML = ''
     for (var i = 0; i < currentQuestion.choices.length; i++) {
@@ -82,30 +82,42 @@ function showQuestion() {
         choiceBtn.setAttribute('class', 'choice-btn')
         choiceBtn.textContent = choice
         choicesSection.appendChild(choiceBtn)
-        
+
     }
+
 
 }
 
-// When an answer button is clicked, it removes time for incorrect answer and adds score for a correct answer
+
+
+// When an answer button is clicked, it removes time for incorrect answer and adds score for a correct answer. It ends game once all questions have been answered
 function questionClick(event) {
     var buttonEl = event.target
     if (buttonEl.value !== questions[currentQuestionIndex].answer) {
-        startTime -= 10
-        answer.textContent = "Wrong answer!"
+        startTime -= 10;
+        alert("Wrong answer!");
 
     }
-    if (buttonEl.value === questions[currentQuestionIndex].answer)
+
+    if (buttonEl.value === questions[currentQuestionIndex].answer) {
         score += 100
-        console.log(score)
+        alert("Correct - Well done");
+
+    }
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < 4) {
+        showQuestion()
+    } else {
+        endGame()
         
-    
+    }
+
     questionText = document.getElementById("question-text")
     timerCount.textContent = startTime
-    currentQuestionIndex++
-    showQuestion()
-    
-  }
+
+}
+
 
 // Starts a 60 second timer clock which stops game at zero
 function startTimer() {
@@ -116,34 +128,54 @@ function startTimer() {
 
         if (startTime === 0) {
             clearInterval(timer);
-            endGame () 
+            endGame()
         }
     }, 1000);
-    
+
 }
-
-
 
 // Listens for answer choice then actives question click funstion
 choicesSection.onclick = questionClick
 
-// Endgame function takes to the final score div and display score and lets you input initals.
-// It directs you to highscores page when submit button is pressed
 
-function endGame () {
+// Endgame function takes to the final score div and display score and lets you input initals.
+function endGame() {
     location.href = './index2.html';
-    finalScore.innerHTML = "score";
- 
+    finalScore.innerHTML == score;
+    var initialsInput = document.getElementById("initials-input").value;
+    var initialsInput = localStorage.getItem("initials-input", initialsInput);
     
 }
 
 
-submitButton.onclick = highScoresPage 
-
-// removes initils section and displayss high sccores section and displays saved high scores
-function highScoresPage () {
+// removes initils section and displays high sccores section and displays saved high scores
+function highScoresPage() {
     document.querySelector("#high-scores").style.display = "block";
     document.querySelector("#initials-page").style.display = "none";
-    
+
 }
 
+
+// This ssection was intended to clear the highscores and local storage when the clearscore button was clicked. 
+// Then take you back to start quiz screen
+function clearStorage() {
+        highscore-name.textContent == "" ;
+        localStorage.clear(initialsInput, score);
+        goBack()
+}
+
+// This was supposed to take you back to the start quiz screen and hide the highscores section, and display the initials input section
+function goBack() {
+    location.href = './index.html';
+    document.querySelector("#high-scores").style.display = "none";
+    document.querySelector("#initials-page").style.display = "block";
+}
+
+// Start quiz when the quiz button is clicked
+startButton.addEventListener("click", startQuiz);
+
+// It directs you to highscores page when submit button is pressed - I can't get the function to work
+submitButton.addEventListener("click", highScoresPage);
+
+// It directs you to clearStorage page when submit button is pressed - I can't get the function to work
+clearScoresButton.addEventListener("click", clearStorage);
