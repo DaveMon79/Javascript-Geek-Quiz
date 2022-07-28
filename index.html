@@ -42,12 +42,26 @@
             <h3 id="question-text"></h3>
         </div>
         <div id="choices-section">
-        
+        </div>
+      
+    </section>
+
+    <!-- This section display score from the quiz and prompts the user to input their initials -->
+    <Section id="initials-page" class="enter-initals">
+        <div>
+            <h2>All done!</h2>
         </div>
         <div>
-            <h4 id="answer"></h4>
+            <h3>Your final score is:<span id="final-score"></span></h3>
         </div>
-    </section>
+        <div class="input-name">
+            <h4>Enter your initials:</h4>
+            <form action="name">
+                <input id="initials-input" type="text" placeholder="enter your initials here">
+            </form>
+            <button type="button" id="submit-button">Submit</button>
+        </div>
+    </Section>
      
     <script src="script.js"></script>
 </body>

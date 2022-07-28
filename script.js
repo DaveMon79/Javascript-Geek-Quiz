@@ -4,20 +4,16 @@ var startButton = document.getElementById("start-button");
 var questionText = document.getElementById("question-text");
 var answer = document.getElementById("answer");
 var timerCount = document.getElementById("timer-count");
-var choicesSection = document.querySelector('#choices-section');
-
-var initialsPage = document.getElementById("initials-page");
-var initialsInput = document.getElementById("initials-input");
-var finalScore = document.getElementById("final-score");
+var choicesSection = document.getElementById('choices-section');
 
 var submitButton = document.getElementById("submit-button");
-var goBackButton = document.getElementById("go-back");
-var clearScoresButton = document.getElementById("clear-scores");
-
+var initialsInput = document.getElementById("initials-input");
+var finalScore = document.getElementById("final-score");
 
 var currentQuestion = {};
 var score = 0;
 var currentQuestionIndex = 0
+var timer
 
 // Questions for the quiz
 var questions = [
@@ -85,10 +81,10 @@ function showQuestion() {
 
     }
 
-
 }
 
 
+choicesSection.addEventListener("click", questionClick);
 
 // When an answer button is clicked, it removes time for incorrect answer and adds score for a correct answer. It ends game once all questions have been answered
 function questionClick(event) {
@@ -109,15 +105,11 @@ function questionClick(event) {
     if (currentQuestionIndex < 4) {
         showQuestion()
     } else {
-        endGame()
-        
+        scoreInitialsPage()
+
     }
 
-    questionText = document.getElementById("question-text")
-    timerCount.textContent = startTime
-
 }
-
 
 // Starts a 60 second timer clock which stops game at zero
 function startTimer() {
@@ -128,54 +120,38 @@ function startTimer() {
 
         if (startTime === 0) {
             clearInterval(timer);
-            endGame()
+            scoreInitialsPage()
+
         }
     }, 1000);
 
 }
 
-// Listens for answer choice then actives question click funstion
-choicesSection.onclick = questionClick
+
+// Removes questions section and display Initials page. It adds the score and user initials to local storage
+function scoreInitialsPage() {
+    document.querySelector(".question").style.display = "none";
+    document.querySelector(".enter-initals").style.display = "block";
+    finalScore.textContent = score;
+    localStorage.setItem("score", score);
+    document.getElementById("initials-input").value;
+    localStorage.setItem("initials-input", initialsInput);
 
 
-// Endgame function takes to the final score div and display score and lets you input initals.
+}
+
+
+// Endgame function takes to the highscores page.
 function endGame() {
     location.href = './index2.html';
-    finalScore.innerHTML == score;
-    var initialsInput = document.getElementById("initials-input").value;
-    var initialsInput = localStorage.getItem("initials-input", initialsInput);
-    
-}
-
-
-// removes initils section and displays high sccores section and displays saved high scores
-function highScoresPage() {
-    document.querySelector("#high-scores").style.display = "block";
-    document.querySelector("#initials-page").style.display = "none";
+    addHighscores ()
 
 }
 
 
-// This ssection was intended to clear the highscores and local storage when the clearscore button was clicked. 
-// Then take you back to start quiz screen
-function clearStorage() {
-        highscore-name.textContent == "" ;
-        localStorage.clear(initialsInput, score);
-        goBack()
-}
-
-// This was supposed to take you back to the start quiz screen and hide the highscores section, and display the initials input section
-function goBack() {
-    location.href = './index.html';
-    document.querySelector("#high-scores").style.display = "none";
-    document.querySelector("#initials-page").style.display = "block";
-}
 
 // Start quiz when the quiz button is clicked
 startButton.addEventListener("click", startQuiz);
 
 // It directs you to highscores page when submit button is pressed - I can't get the function to work
-submitButton.addEventListener("click", highScoresPage);
-
-// It directs you to clearStorage page when submit button is pressed - I can't get the function to work
-clearScoresButton.addEventListener("click", clearStorage);
+submitButton.addEventListener("click", endGame);
