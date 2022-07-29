@@ -7,7 +7,6 @@ var timerCount = document.getElementById("timer-count");
 var choicesSection = document.getElementById('choices-section');
 
 var submitButton = document.getElementById("submit-button");
-var initialsInput = document.getElementById("initials-input");
 var finalScore = document.getElementById("final-score");
 
 var currentQuestion = {};
@@ -134,23 +133,21 @@ function scoreInitialsPage() {
     document.querySelector(".enter-initals").style.display = "block";
     finalScore.textContent = score;
     localStorage.setItem("score", score);
-    document.getElementById("initials-input").value;
+    var initialsInput = document.getElementById("initials-input").value;
     localStorage.setItem("initials-input", initialsInput);
-
-
+    
 }
 
 
 // Endgame function takes to the highscores page.
 function endGame() {
+    document.querySelector(".enter-initals").style.display = "none";
+    document.querySelector(".question").style.display = "block";
     location.href = './index2.html';
-    addHighscores ()
-
 }
 
 
 
-// Start quiz when the quiz button is clicked
 startButton.addEventListener("click", startQuiz);
 
 // It directs you to highscores page when submit button is pressed - I can't get the function to work

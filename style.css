@@ -151,7 +151,7 @@ article button  {
 
 
 /** Sets size, position, border and backgroud image for all page 2 boxes **/
-.enter-initals {
+#initials-page {
     display: none;
     width: 60%;
     justify-items: center;
