@@ -10,11 +10,8 @@
 
 /** adds background colour to the body**/
 body {
-    background-image: url(./Octogon.png);
-    background-position: center;
+    background-image: url(./Javascript.png);
     background-size: 25%;
-
-    
 
 }
 
@@ -264,6 +261,9 @@ button:hover {
     
 }
 
+.scores-list {
+    padding: 10px;
+}
 
 /** Increases box widths at 900px **/
 @media screen and (max-width: 900px) {

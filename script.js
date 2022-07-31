@@ -1,4 +1,4 @@
-// Variables for functions which will be called in the pagee
+// Variables for functions which will be called in the page
 
 var startButton = document.getElementById("start-button");
 var questionText = document.getElementById("question-text");
@@ -8,43 +8,45 @@ var choicesSection = document.getElementById('choices-section');
 
 var submitButton = document.getElementById("submit-button");
 var finalScore = document.getElementById("final-score");
+var initialsInput = "";
 
 var currentQuestion = {};
 var score = 0;
 var currentQuestionIndex = 0
 var timer
 
+
 // Questions for the quiz
 var questions = [
     {
 
-        question: "The very first UFC event took place on Fri, 12 Nov 1993, but who won UFC 1?",
-        choices: ['Chuck Liddell', 'Forrest Griffin', 'Royce Gracie', 'BJ Penn'],
-        answer: "Royce Gracie",
+        question: "Arrays in Javascript can be used to store what_______?",
+        choices: ['Numbers', 'Other arrays', 'Booleans', 'All the above'],
+        answer: "All the above",
 
     },
 
     {
 
-        question: "Who was the first fighter to beat Georges St. Pierre?",
-        choices: ["Johny Hendricks", "Matt Hughes", "Matt Serra", 'BJ Penn'],
-        answer: "Matt Hughes",
+        question: "The condition in an if statement is enclosed in with________?",
+        choices: ["Quotes", "Curly brackets", "Parenthesis", 'Square brackets'],
+        answer: "Parenthesis",
 
     },
 
     {
 
-        question: "Who was the first fighter to hold UFC titles in multiple divisions at the same time?",
-        choices: ["Randy Couture", "BJ Penn", "Amanda Nunes", "Connor McGreggor"],
-        answer: "Connor McGreggor",
+        question: "String values must be enclosed with______when being assigned to variables?",
+        choices: ["Comas", "Curly brackets", "Quotes", "Parenthesis"],
+        answer: "Curly brackets",
 
     },
 
     {
 
-        question: "How many times did Anderson Silva defend his middleweight title?",
-        choices: ["8", "9", "10", "11"],
-        answer: "10",
+        question: "A very useful tool used during development and debugging for printing content to the debugger is______?",
+        choices: ["Javascript", "Terminal", "Console Log", "for loops"],
+        answer: "Console Log",
 
     }
 ]
@@ -105,6 +107,7 @@ function questionClick(event) {
         showQuestion()
     } else {
         scoreInitialsPage()
+               
 
     }
 
@@ -127,27 +130,29 @@ function startTimer() {
 }
 
 
-// Removes questions section and display Initials page. It adds the score and user initials to local storage
+// Removes questions section and display Initials page. 
 function scoreInitialsPage() {
     document.querySelector(".question").style.display = "none";
     document.querySelector(".enter-initals").style.display = "block";
     finalScore.textContent = score;
-    localStorage.setItem("score", score);
-    var initialsInput = document.getElementById("initials-input").value;
-    localStorage.setItem("initials-input", initialsInput);
+    //localStorage.setItem("score", JSON.stringify(score));
     
 }
 
 
-// Endgame function takes to the highscores page.
+// Endgame function takes to the highscores page. It adds the score and user initials to local storage
 function endGame() {
+    initialsInput = document.getElementById("initials-input").value;
+    results = [initialsInput, score];
+    localStorage.setItem("results", JSON.stringify(results));
     document.querySelector(".enter-initals").style.display = "none";
     document.querySelector(".question").style.display = "block";
     location.href = './index2.html';
+        
 }
 
 
-
+// Starts quiz when button is clicked
 startButton.addEventListener("click", startQuiz);
 
 // It directs you to highscores page when submit button is pressed - I can't get the function to work
